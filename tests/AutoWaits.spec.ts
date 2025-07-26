@@ -34,3 +34,4 @@ const successButton = page.locator(".bg-success");
  const allText = await successButton.allTextContents();
  expect(allText).toContain("Data loaded with AJAX get request.");
 })
+
