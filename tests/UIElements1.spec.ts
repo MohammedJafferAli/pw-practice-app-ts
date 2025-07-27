@@ -53,7 +53,7 @@ test.describe("Automate Form layout elements", async () => {
 
 test.describe("Modal  and Overlays", async () => {
 
-    test.only("CheckBox automation", async ({ page }) => {
+    test("CheckBox automation", async ({ page }) => {
 
         await page.getByTitle('Modal & Overlays').click();
         await page.getByTitle('Toastr').click();
@@ -72,6 +72,22 @@ test.describe("Modal  and Overlays", async () => {
             await box.uncheck({ force: true })
             expect(await box.isChecked()).toBeFalsy();
         }
+
+    })
+
+    test('DropDown and List', async({page})=>{
+        const dropDownTheme = page.locator('ngx-header nb-select');
+        await dropDownTheme.click();
+
+        page.getByRole('list');// for UI list
+        page.getByRole('listitem');//For LI list
+
+        const optionsList = page.locator('nb-option-list nb-option');
+        expect (optionsList).toHaveText(["Light","Dark","Cosmic","Corporate"]); //Check the list
+
+        await optionsList.filter({hasText : "Cosmic"}).click();
+        const globalHeader = page.locator('nb-layout-header');
+        expect (globalHeader).toHaveCSS('background-color', 'rgb(50, 50, 89)');
 
     })
 })
