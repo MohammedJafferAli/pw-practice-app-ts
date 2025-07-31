@@ -75,7 +75,7 @@ test.describe("Modal  and Overlays", async () => {
 
     })
 
-    test('DropDown and List', async({page})=>{
+    test.only('DropDown and List', async({page})=> {
         const dropDownTheme = page.locator('ngx-header nb-select');
         await dropDownTheme.click();
 
@@ -88,6 +88,22 @@ test.describe("Modal  and Overlays", async () => {
         await optionsList.filter({hasText : "Cosmic"}).click();
         const globalHeader = page.locator('nb-layout-header');
         expect (globalHeader).toHaveCSS('background-color', 'rgb(50, 50, 89)');
+
+        const colors = {
+
+            "Light": "rgb(255, 255, 255)",
+            "Dark": "rgb(34, 43, 69)",
+            "Cosmic": "rgb(50, 50, 89)",
+            "Corporate": "rgb(255, 255, 255)",
+        };
+
+        await dropDownTheme.click();
+        for(const color in colors)
+        {
+            await optionsList.filter({hasText: color}).click();
+            expect (globalHeader).toHaveCSS('background-color', colors[color]);
+            await dropDownTheme.click();
+        };
 
     })
 })
